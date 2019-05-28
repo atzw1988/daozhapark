@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" style="">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  <title>道闸立体停车</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/rem.js"></script>
+</head>
+
+<body>
+  <div class="mask" style="display: none">
+    <div class="maskPlate">
+      <span class="errPlate">请使用微信或支付宝扫描二维码</span>
+    </div>
+  </div>
+</body>
+<script src="js/jquery-3.4.0.min.js"></script>
+<script>
+  if (!isMobile()) {
+    $(".errPlate").text("请使用微信或支付宝扫描二维码");
+    $(".errPlateBtn").remove();
+    $(".mask").show();
+  }
+  if(isMobile()&&!isWeiXin()&&!isAlipay()){
+    $(".errPlate").text("请使用微信或支付宝扫描二维码");
+    $(".errPlateBtn").remove();
+    $(".mask").show();
+  }
+  console.log(window.navigator.userAgent.match())
+
+  function isMobile() {
+    var ua = window.navigator.userAgent;
+    if (!!ua.match(/AppleWebKit.*Mobile.*/)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function isWeiXin() {
+    var ua = window.navigator.userAgent.toLowerCase();
+    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function isAlipay() {
+    var userAgent = window.navigator.userAgent.toLowerCase();
+    if (userAgent.match(/Alipay/i) == "alipay") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  var source = "wxjs";
+  var code = ''
+  var total_fee = ''
+  var isLogin = false
+  $(function () {
+      if (isWeiXin()) {
+        source = "wxjs";
+        var appid = "wx08551f6139c4b9fb";
+        var redirect_uri = encodeURIComponent("http://www.lcgxlm.com/itsPay/index.html");
+        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appid +
+        "&redirect_uri=" +
+        redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect"
+      } else if (isAlipay()) {
+        source = "alipayjs";
+      } else {
+        $(".errPlate").text("请使用微信或支付宝扫描二维码");
+        $(".errPlateBtn").remove();
+        $(".mask").show();
+        return;
+      }
+      if(isAlipay()){
+        window.location.pathname = '/itsPay/index.html'
+      }
+    },
+  )
+</script>
+
+</html>

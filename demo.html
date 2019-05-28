@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" style="">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  <title>道闸立体停车</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/rem.js"></script>
+</head>
+
+<body>
+  <div class="header">
+    <ul>
+      <li class="carno">
+        <div class="active">
+          <img src="img/shuruxiugai.png" alt="">
+        </div>
+        <span>输入车牌</span>
+      </li>
+      <li class="payno">
+        <div>
+          <img src="img/wallet_icon.png" alt="">
+        </div>
+        <span>支付费用</span>
+      </li>
+      <li class="success">
+        <div>
+          <img src="img/dingdanyichenggong.png" alt="">
+        </div>
+        <span>付款成功</span>
+      </li>
+    </ul>
+  </div>
+  <!-- 车牌查询 -->
+  <div class="content">
+    <span>车牌号</span>
+    <div class="cartext">
+      <div class="area left">浙</div>
+      <div class="fake-box">
+        <div id="1" class="fake"></div>
+        <div id="2" class="fake"></div>
+        <div id="3" class="fake"></div>
+        <div id="4" class="fake"></div>
+        <div id="5" class="fake"></div>
+        <div id="6" class="fake last"></div>
+        <div class="fake fakenew">新能源</div>
+      </div>
+    </div>
+    <div class="query">
+      <button class="btn">查询停车费</button>
+      <button class="btn">登录</button>
+    </div>
+  </div>
+  <!-- 消费金额显示 -->
+  <div class="amount" style="display:none">
+    <ul>
+      <li>
+        <span class="carno">车牌信息</span>
+        <span class="carnotext text"></span>
+      </li>
+      <li>
+        <span class="time">进场时间：</span>
+        <span class="timetext text"></span>
+      </li>
+      <li>
+        <span class="duration">已停时长：</span>
+        <span class="durationtext text"></span>
+      </li>
+      <li>
+        <span class="money">已消费金额：</span>
+        <span class="moneytext text"></span>
+      </li>
+    </ul>
+    <button class="paycost">缴费离场</button>
+  </div>
+  <!-- 缴费成功页面 -->
+  <div class="successto" style="display:none">
+    <img src="img/chenggong.png" alt="">
+    <span>缴费成功，请及时离场</span>
+  </div>
+  <!-- 省份选择键盘 -->
+  <div class="province" style="display: none">
+    <ul>
+      <li>京</li>
+      <li>沪</li>
+      <li>粤</li>
+      <li>浙</li>
+      <li>苏</li>
+      <li>津</li>
+      <li>冀</li>
+      <li>川</li>
+      <li>渝</li>
+      <li>鄂</li>
+      <li>闽</li>
+      <li>陕</li>
+      <li>鲁</li>
+      <li>湘</li>
+      <li>辽</li>
+      <li>皖</li>
+      <li>赣</li>
+      <li>豫</li>
+      <li>桂</li>
+      <li>晋</li>
+      <li>云</li>
+      <li>贵</li>
+      <li>黑</li>
+      <li>吉</li>
+      <li>琼</li>
+      <li>甘</li>
+      <li>蒙</li>
+      <li>新</li>
+      <li>青</li>
+      <li>宁</li>
+      <li>藏</li>
+      <li>台</li>
+      <li>港</li>
+      <li>澳</li>
+    </ul>
+    <div class="qx">取消</div>
+  </div>
+  <!-- 车牌选择虚拟键盘 -->
+  <div class="keyboard" style="display: none">
+    <!-- <div class="accomplish"
+        style="text-align: right;position:absolute;top:0.05rem;right:0.2rem;font-size:0.32rem;color: #fff">完成
+      </div> -->
+    <ul>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+      <li>6</li>
+      <li>7</li>
+      <li>8</li>
+      <li>9</li>
+      <li>0</li>
+      <li>Q</li>
+      <li>W</li>
+      <li>E</li>
+      <li>R</li>
+      <li>T</li>
+      <li>Y</li>
+      <li>U</li>
+      <li class="i" style="background: #ddd">I</li>
+      <li class="o" style="background: #ddd">O</li>
+      <li>P</li>
+      <li>A</li>
+      <li>S</li>
+      <li>D</li>
+      <li>F</li>
+      <li>G</li>
+      <li>H</li>
+      <li>J</li>
+      <li>K</li>
+      <li>L</li>
+      <li>Z</li>
+      <li>X</li>
+      <li>C</li>
+      <li>V</li>
+      <li>B</li>
+      <li>N</li>
+      <li>M</li>
+      <li>学</li>
+    </ul>
+    <div class="backdel">
+      <img src="img/tuige.png" alt="">
+    </div>
+  </div>
+  <!-- 遮罩层 -->
+  <div class="mask" style="display: none">
+    <div class="maskPlate">
+      <span class="errPlate">请使用微信或支付宝扫描二维码</span>
+    </div>
+  </div>
+</body>
+<script src="js/jquery-3.4.0.min.js"></script>
+<script>
+  var redirect_uri = encodeURIComponent("http://www.lcgxlm.com/itsPay/index.html");
+  console.log(redirect_uri)
+  if (!isMobile()) {
+    $(".errPlate").text("请使用微信或支付宝扫描二维码");
+    $(".errPlateBtn").remove();
+    $(".mask").show();
+  }
+  console.log(window.navigator.userAgent.match())
+
+  function isMobile() {
+    var ua = window.navigator.userAgent;
+    if (!!ua.match(/AppleWebKit.*Mobile.*/)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function isWeiXin() {
+    var ua = window.navigator.userAgent.toLowerCase();
+    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function isAlipay() {
+    var userAgent = window.navigator.userAgent.toLowerCase();
+    if (userAgent.match(/Alipay/i) == "alipay") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  var source = "wxjs";
+  var code = ''
+  var total_fee = ''
+  var isLogin = false
+  $(function () {
+      if (isWeiXin()) {
+        source = "wxjs";
+        // if(!isLogin){
+        //   var appid = "wx08551f6139c4b9fb";
+        //   var redirect_uri = encodeURIComponent("http://www.lcgxlm.com/itsPay");
+        //   window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appid + "&redirect_uri="
+        //   +
+        //   redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect"
+
+        //   //转码
+        //   function parse_url(url) { //定义函数
+        //   var pattern = /(\w+)=(\w+)/ig; //定义正则表达式
+        //   var parames = {}; //定义数组
+        //   url.replace(pattern, function (a, b, c) {
+        //   parames[b] = c;
+        //   });
+        //   return parames; //返回这个数组.
+        //   }
+        //   //获取当前url 取到code
+        //   var url = window.location.href;
+        //   var params = parse_url(url);
+        //   //params.code 就是当前的code
+        //   isLogin = true
+        //   code = params.code
+        //   console.log(params.code)
+        // } 
+      } else if (isAlipay()) {
+        source = "alipayjs";
+      } else {
+        $(".errPlate").text("请使用微信或支付宝扫描二维码");
+        $(".errPlateBtn").remove();
+        $(".mask").show();
+        return;
+      }
+    },
+
+    // 取消键隐藏省份键盘
+    $('.qx').click(function () {
+      $('.province').hide()
+    }),
+    // 查询车费
+    $('.btn').click(function () {
+      $('.province').hide();
+      $('.keyboard').hide();
+      let carNum = $(".area").text();
+      console.log(carNum)
+      let carcarNumSub;
+      var isEmpty = true;
+      $(".fake").each(function (index, e) {
+        carNumSub = $(e).text();
+        console.log(carNumSub);
+        if (carNumSub && carNumSub.length > 0 && !$(e).hasClass("fakenew")) {
+          carNum += carNumSub;
+        } else if (!$(e).hasClass("fakenew")) {
+          $(".errPlate").html("请填写完整车牌号");
+          $(".mask").show();
+          isEmpty = false;
+          return false;
+        }
+        console.log(carNum);
+      });
+      $.ajax({
+        type: "post",
+        url: "http://192.168.1.104:13259/its/the/parking/fee",
+        data: {
+          carNo: carNum
+        },
+        success: function (res) {
+          console.log(res)
+          if (res.success) {
+            if (!isEmpty) return;
+            $('.content').hide()
+            $('.carno div').removeClass('active')
+            $('.payno div').addClass('active')
+            $('.amount').show()
+            $('.carnotext').html(carNum)
+            $('.timetext').html(res.data.data.startTime)
+            $('.durationtext').html(res.data.data.parkTime)
+            $('.moneytext').html(res.data.data.payCharge)
+            total_fee = res.data.data.payCharge
+          }
+          if (res.fail) {
+            $(".errPlate").html("没有查到该车牌的停车信息，请查证后重新输入车牌查询");
+            $(".mask").show();
+            isEmpty = false;
+            return false;
+          }
+        }
+      });
+
+    }),
+    // 选择车牌省份
+    $('.area').click(function () {
+      var that = $(this)
+      that.addClass('act').siblings().children().removeClass('act'),
+        $('.province').show(),
+        $('.keyboard').hide(),
+        $('.province ul').click(function (e) {
+          if (e.target.nodeName === 'LI') {
+            var name = $(e.target).html()
+            that.html(name)
+            $(e.target).parent().parent().hide();
+            $('.keyboard').show();
+            that.removeClass('act');
+            $('.fake-box div').eq(0).addClass('act');
+          }
+        })
+    }),
+    // 车牌输入
+    $('.fake').click(function (e) {
+      $('.keyboard').show()
+      $('.province').hide()
+      var that = $(this)
+      that.addClass('act').siblings().children().removeClass('act'),
+        $('.keyboard li').off('touchstart').on('touchstart', function () {
+          var self = $(this).attr('class');
+          if ((self == 'i') || (self == 'o')) {
+            return
+          }
+          var cname = $(this).html();
+          $('.fake-box .act').html(cname);
+          var id_div = parseInt($('.fake-box .act').attr("id"));
+          $('#' + (id_div + 1)).addClass('act').siblings().removeClass('act');
+        })
+    }),
+    $('.keyboard li').off('touchstart').on('touchstart', function () {
+      var self = $(this).attr('class');
+      if ((self == 'i') || (self == 'o')) {
+        return
+      }
+      var cname = $(this).html();
+      $('.fake-box .act').html(cname);
+      var id_div = parseInt($('.fake-box .act').attr("id"));
+      $('#' + (id_div + 1)).addClass('act').siblings().removeClass('act');
+    }),
+    // 系能源车牌
+    $('.fakenew').click(function () {
+      $(this).attr('id', '7').removeClass('fakenew').html('')
+    }),
+    //车牌号焦点样式事件
+    $(".fake-box").on('touchstart', '.fake', function (e) {
+      console.log(e)
+      e.stopPropagation();
+      $('.province').hide();
+      $('.area').removeClass('act');
+      $('.keyboard').show();
+      $(this).addClass('act').siblings().removeClass('act');
+    }),
+    // 删除键
+    $('.backdel').off('touchstart').on('touchstart', function () {
+      $('.fake-box .act').html('');
+      var index = $('.fake-box .act').attr('id');
+      $('#' + (index - 1)).addClass('act').siblings().removeClass('act')
+    }),
+    // 点击蒙层关闭蒙层
+    $('.mask').click(function () {
+      $(".mask").hide()
+    }),
+    // 缴费离场事件
+    $('.paycost').click(function () {
+      $('.content').hide()
+      $('.amount').hide()
+      $('.successto').show()
+      $('.carno div').removeClass('active')
+      $('.payno div').removeClass('active')
+      $('.success div').addClass('active')
+
+      $.ajax({
+        type: "post",
+        url: "http://192.168.1.104:13259/its/the/parking/payfor",
+        data: {
+          carNo: carNum,
+          total_fee: total_fee
+        },
+        success: function (res) {
+          console.log(res)
+          if (res.success) {
+            if (!isEmpty) return;
+            total_fee = res.data.data.payCharge
+          }
+          if (res.fail) {
+            isEmpty = false;
+            return false;
+          }
+        }
+      });
+    })
+  )
+</script>
+
+</html>
