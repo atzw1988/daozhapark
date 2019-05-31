@@ -145,10 +145,10 @@ body{
 }
 .backdel{
   position: absolute;
-  right: 0.15rem;
+  right: 1.1rem;
   top: 3.75rem;
   height: 0.75rem;
-  width: 2.55rem;
+  width: 1.6rem;
   background: #fff;
   border-radius: 5px;
 }
@@ -157,6 +157,19 @@ body{
   height: 0.75rem;
   display: block;
   margin: 0 auto;
+}
+.accomplish {
+  position: absolute;
+  right: 0.15rem;
+  top: 3.75rem;
+  height: 0.75rem;
+  width: 0.75rem;
+  border-radius: 5px;
+  font-size: 0.3rem;
+  background: #fff;
+  line-height: 0.75rem;
+  text-align: center;
+  font-weight: 600;
 }
 .mask{
   width: 100%;

@@ -167,6 +167,9 @@
     <div class="backdel">
       <img src="img/tuige.png" alt="">
     </div>
+    <div class="accomplish">
+      <span>完成</span>
+    </div>
   </div>
   <!-- 遮罩层 -->
   <div class="mask" style="display: none">
@@ -275,13 +278,13 @@
       });
       $.ajax({
         type: "post",
-        url: "http://192.168.1.104:13259/its/the/hision/billig",
+        url: "http://www.lcgxlm.com:13259/its/admin/pay/billig",
         data: {
           carNo: carNum
         },
         success: function (res) {
           console.log(res)
-          if(res.success){
+          if (res.success) {
             if (!isEmpty) return;
             $('.content').hide()
             $('.carno div').removeClass('active')
@@ -294,22 +297,24 @@
             total_fee = res.data.data.payCharge
             orderno = res.data.data.tradeNo
           }
-          if(res.fail){
+          if (res.fail) {
             $(".errPlate").html("没有查到该车牌的停车信息，请查证后重新输入车牌查询");
             $(".mask").show();
             isEmpty = false;
             return false;
-          }        
+          }
         }
       });  
     }),
     // 选择车牌省份
-    $('.area').click(function(){
+    $('.area').click(function(e){
+      e.stopPropagation()
       var that = $(this)
       that.addClass('act').siblings().children().removeClass('act'),
       $('.province').show(),
       $('.keyboard').hide(),
       $('.province ul').click(function(e){
+        e.stopPropagation()
         if(e.target.nodeName === 'LI'){
           var name = $(e.target).html()
           that.html(name)
@@ -320,8 +325,21 @@
         }
       })
     }),
+    //点击空白处关闭键盘
+    $('body').click(function(){
+      console.log('触发关闭')
+      $('.province').hide();
+      $('.keyboard').hide();
+      return false
+    }),
+    //点击完成关闭键盘
+    $('.accomplish').click(function(){
+      $('.keyboard').hide();
+      return false
+    }),
     // 车牌输入
     $('.fake').click(function(e){
+      e.stopPropagation()
       $('.keyboard').show()
       $('.province').hide()
       var that = $(this)
@@ -335,9 +353,11 @@
         $('.fake-box .act').html(cname);
         var id_div = parseInt($('.fake-box .act').attr("id"));
         $('#' + (id_div + 1)).addClass('act').siblings().removeClass('act');
+        return false
       })
     }),
-    $('.keyboard li').off('touchstart').on('touchstart', function () {
+    $('.keyboard li').off('touchstart').on('touchstart', function (e) {
+      e.stopImmediatePropagation();
       var self=$(this).attr('class');
       if((self=='i')||(self=='o')){
         return
@@ -346,6 +366,7 @@
       $('.fake-box .act').html(cname);
       var id_div = parseInt($('.fake-box .act').attr("id"));
       $('#' + (id_div + 1)).addClass('act').siblings().removeClass('act');
+      return false
     }),
     // 系能源车牌
     $('.fakenew').click(function(){
@@ -365,6 +386,7 @@
       $('.fake-box .act').html('');
       var index = $('.fake-box .act').attr('id');
       $('#' + (index - 1)).addClass('act').siblings().removeClass('act')
+      return false
     }),
     // 点击蒙层关闭蒙层
     $('.mask').click(function(){
